@@ -66,6 +66,29 @@
             $this->setName($new_name);
         }
 
+        function delete()
+        {
+        $GLOBALS['DB']->exec("DELETE FROM authors WHERE id = {$this->getId()};");
+        $GLOBALS['DB']->exec("DELETE FROM authors_books WHERE author_id = {$this->getId()};");
+        }
+
+        static function find($search_id)
+        {
+            $found_author = null;
+            $authors = Author::getAll();
+            foreach($authors as $author){
+                $author_id = $author->getId();
+                if($author_id == $search_id){
+                    $found_author = $author;
+                }
+            }
+            return $found_author;
+        }
+
+        
+
+
+
     }
 
 ?>

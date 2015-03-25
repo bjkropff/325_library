@@ -142,6 +142,25 @@
             $this->assertEquals(['FMF', 'Action'], [$test_book->getTitle(), $test_book->getGenre()]);
         }
 
+        function test_delete()
+        {
+            $name = 'John Smith';
+            $id = 1;
+            $test_author = new Author($name, $id);
+            $test_author->save();
+
+            $title = 'Otto';
+            $genre = 'Fantasy';
+            $id2 = 2;
+            $test_book = new Book($title, $genre, $id2);
+            $test_book->save();
+
+            $test_book->addAuthor($test_author);
+            $test_book->delete();
+
+            $this->assertEquals([], $test_author->getBooks());
+        }
+
     }
 
 ?>

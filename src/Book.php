@@ -80,6 +80,25 @@
             $this->setGenre($new_genre);
         }
 
+        function delete()
+        {
+        $GLOBALS['DB']->exec("DELETE FROM books WHERE id = {$this->getId()};");
+        $GLOBALS['DB']->exec("DELETE FROM authors_books WHERE book_id = {$this->getId()};");
+        }
+
+        static function find($search_id)
+        {
+            $found_book = null;
+            $books = Book::getAll();
+            foreach($books as $book) {
+                $book_id = $book->getId();
+                if($student_id == $search_id){
+                    $found_book = $book;
+                }
+            }
+            return $found_book;
+        }
+
     }
 
 ?>

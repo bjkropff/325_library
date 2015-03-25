@@ -108,6 +108,26 @@
             $this->assertEquals(['RD'], [$test_author->getName()]);
         }
 
+        function test_delete()
+        {
+            $name = 'John Smith';
+            $id = 1;
+            $test_author = new Author($name, $id);
+            $test_author->save();
+
+            $title = 'Otto';
+            $genre = 'Fantasy';
+            $id2 = 2;
+            $test_book = new Book($title, $genre, $id2);
+            $test_book->save();
+
+            $test_author->addBook($test_book);
+            $test_author->delete();
+
+            $this->assertEquals([], $test_book->getAuthors());
+        }
+
+
     }
 
 ?>
