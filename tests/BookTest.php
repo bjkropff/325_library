@@ -127,6 +127,21 @@
             $this->assertEquals([$test_book, $test_book2], $result);
         }
 
+        function test_update()
+        {
+            $title = 'BFG';
+            $genre = 'Humor';
+            $id = 1;
+            $test_book = new Book($title, $genre, $id);
+            $test_book->save();
+            $new_title = 'FMF';
+            $new_genre = 'Action';
+
+            $test_book->update($new_title, $new_genre);
+
+            $this->assertEquals(['FMF', 'Action'], [$test_book->getTitle(), $test_book->getGenre()]);
+        }
+
     }
 
 ?>

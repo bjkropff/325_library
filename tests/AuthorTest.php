@@ -97,7 +97,15 @@
 
         function test_update()
         {
+            $name = 'BFG';
+            $id = 1;
+            $test_author = new Author($name, $id);
+            $test_author->save();
+            $new_name = 'RD';
 
+            $test_author->update($new_name);
+
+            $this->assertEquals(['RD'], [$test_author->getName()]);
         }
 
     }
