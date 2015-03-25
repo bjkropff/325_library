@@ -71,5 +71,33 @@
             $GLOBALS['DB']->exec("DELETE FROM patrons *;");
         }
 
+        function update($new_first_last, $new_phone)
+        {
+            $GLOBALS['DB']->exec("UPDATE patrons SET patron = '{$new_first_last}' WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("UPDATE patrons SET phone = '{$new_phone}' WHERE id = {$this->getId()};");
+            $this->setFirstLast($new_first_last);
+            $this->setPhone($new_phone);
+        }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM patrons WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM checkouts WHERE patron_id = {$this->getId()};");
+        }
+
+        static function find($search_id)
+        {
+            $found_patron = null;
+            $patrons = Patron::getAll();
+            foreach($patrons as $patron) {
+                $patron_id = $patron->getId();
+                if($patron_id == $search_id) {
+                    $found_patron = $patron;
+                }
+            }
+            return $found_patron;
+        }
+
+
     }
 ?>

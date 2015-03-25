@@ -107,5 +107,40 @@
 
             $this->assertEquals([$test_patron], $result);
         }
+
+        function test_update()
+        {
+            $first_last = 'Jimmy Bob';
+            $phone = '555-555-5544';
+            $id = 1;
+            $test_patron = new Patron($first_last, $phone, $id);
+            $test_patron->save();
+
+            $new_first_last = 'Janny Bob';
+            $new_phone = '555-555-5554';
+
+            $test_patron->update($new_first_last, $new_phone);
+
+            $this->assertEquals(['Janny Bob', '555-555-5554'], [$test_patron->getFirstLast(), $test_patron->getPhone()]);
+        }
+
+        function test_find()
+        {
+            $first_last = 'Jimmy Bob';
+            $phone = '555-555-5544';
+            $id = 1;
+            $test_patron = new Patron($first_last, $phone, $id);
+            $test_patron->save();
+
+            $first_last2 = 'Jimmy John';
+            $phone2 = '555-555-5553';
+            $id2 = 2;
+            $test_patron2 = new Patron($first_last2, $phone2, $id2);
+            $test_patron2->save();
+
+            $result = Patron::find($test_patron->getId());
+
+            $this->assertEquals($test_patron, $result);
+        }
     }
 ?>
