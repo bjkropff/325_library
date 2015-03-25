@@ -161,6 +161,25 @@
             $this->assertEquals([], $test_author->getBooks());
         }
 
+        function test_find()
+        {
+            $title = 'BFG';
+            $genre = 'Adventure';
+            $id = 1;
+            $test_book = new Book($title, $genre, $id);
+            $test_book->save();
+
+            $title2 = 'FMF';
+            $genre2 = 'Adventure';
+            $id2 = 2;
+            $test_book2 = new Book($title2, $genre2, $id2);
+            $test_book2->save();
+
+            $result = Book::find($test_book->getId());
+
+            $this->assertEquals($test_book, $result);
+        }
+
     }
 
 ?>

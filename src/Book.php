@@ -92,11 +92,31 @@
             $books = Book::getAll();
             foreach($books as $book) {
                 $book_id = $book->getId();
-                if($student_id == $search_id){
+                if($book_id == $search_id){
                     $found_book = $book;
                 }
             }
             return $found_book;
+        }
+
+        function addAuthor($author)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO authors_books (author_id, book_id) VALUES ('{$author->getId()}', {$this->getId()});");
+        }
+
+        function getAuthors()
+        {
+            $query = $GLOBALS['DB']->query("SELECT authors.* FROM books JOIN authors_books ON (books.id = authors_books.book_id) JOIN authors ON (authors_books.author_id = authors.id) WHERE books.id = {$this->getId()};");
+            $returned_authors = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            $authors = array();
+            foreach($returned_authors as $returned_author){
+                $name = $returned_author['name'];
+                $id = $returned_author['id'];
+                $new_author = new Author($name, $id);
+                array_push($authors, $new_author);
+            }
+            return $authors;
         }
 
     }

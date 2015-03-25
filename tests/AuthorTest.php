@@ -127,6 +127,23 @@
             $this->assertEquals([], $test_book->getAuthors());
         }
 
+        function test_find()
+        {
+            $name = 'John Smith';
+            $id = 1;
+            $test_author = new Author($name, $id);
+            $test_author->save();
+
+            $name2 = 'Jane Smith';
+            $id2 = 2;
+            $test_author2 = new Author($name2, $id2);
+            $test_author2->save();
+
+            $result = Author::find($test_author->getId());
+
+            $this->assertEquals($test_author, $result);
+        }
+
 
     }
 

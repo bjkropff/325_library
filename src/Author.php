@@ -85,9 +85,26 @@
             return $found_author;
         }
 
-        
+        function addBook($book)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO authors_books (author_id, student_id) VALUES ({$book->getId()}, {$this->getId()});");
+        }
 
+        function getBooks()
+        {
+            $query = $GLOBALS['DB']->query("SELECT books.* FROM authors JOIN authors_books ON (authors.id = authors_books.author_id) JOIN books ON (authors_books.book_id = books.id) WHERE books.id = {$this->getId()};");
+            $returned_books = $query->fetchAll(PDO::FETCH_ASSOC);
 
+            $books = array();
+            foreach($returned_books as $returned_book) {
+                $title = $returned_book['title'];
+                $genre = $returned_book['genre'];
+                $id = $returned_book['id'];
+                $new_book = new Book($title, $genre, $id);
+                array_push($books, $new_book);
+            }
+            return $books;
+        }
 
     }
 
