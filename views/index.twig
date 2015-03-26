@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- META -->
+
         <meta charset='utf-8'>
 
-        <!-- PAGE TITLE -->
-        <title>My Project</title>
-
-        <!-- STYLES -->
+        <title>Chattanooga Library</title>
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
         <link rel='stylesheet' href='css/styles.css'>
-
-        <!-- JAVESCRIPTS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div class='container-fluid'>
+        <div class='container'>
 
-            <!-- PAGE HEADER -->
             <div class='page-header'>
-                <h1>My Project</h1>
+                <h1>Chattanooga<small>Library</small></h1>
             </div>
+            {% if books is not empty %}
+            <p>Here are the books in the library.</p>
+                {% for book in books %}
+                <a href='/books/{{ book.getId }}'>
+            <ul>
+                <p>{{ book.getTitle }}</p>
+                <p>{{ book.getGenre }}</p>
+            </ul>
+                </a>
+                {% endfor %}
+            {% endif %}
+            <p><a href="/books"><button type='submit' method='post'>Add a book</button>
 
-            <!-- MAIN CONTENT -->
-            <p>Hi. I'm a <strong>boilerplate</strong>. Use me to make something awesome, <em>faster</em>.</p>
 
-            <!-- PAGE FOOTER -->
+
             <div class='page-footer'>
 
-            </div><!-- END DIV PAGE FOOTER -->
+            </div>
         </div><!-- END DIV CONTAINER -->
     </body>
 </html>

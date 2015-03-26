@@ -95,6 +95,20 @@
             $this->assertEquals([$test_author, $test_author2], $result);
         }
 
+        function test_update_database()
+        {
+            $name = 'BFG';
+            $id = 1;
+            $test_author = new Author($name, $id);
+            $test_author->save();
+            $new_name = 'RD';
+
+            $test_author->update($new_name);
+            $new_author = Author::find($test_author->getId());
+
+            $this->assertEquals(['RD'], [$new_author->getName()]);
+        }
+
         function test_update()
         {
             $name = 'BFG';

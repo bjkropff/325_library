@@ -199,7 +199,7 @@
             $test_copy->addPatron($test_patron);
             $result = $test_copy->getPatrons();
 
-            $this->assertEquals($test_patron, $result[0]);
+            $this->assertEquals([$test_patron], $result);
         }
     }
 

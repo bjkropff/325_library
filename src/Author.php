@@ -1,6 +1,13 @@
 <?php
 
-    $DB = new PDO('pgsql:host=localhost;dbname=library_test');
+    require_once __DIR__."/../src/Book.php";
+
+    $DB = new PDO('pgsql:host=localhost;dbname=library');
+
+    /**
+    * @backupGlobals disabled
+    * $backupStaticAttribute disabled
+    */
 
     class Author
     {

@@ -1,10 +1,15 @@
 <?php
 
-    $DB = new PDO('pgsql:host=localhost;dbname=library_test');
+    $DB = new PDO('pgsql:host=localhost;dbname=library');
 
-    require_once "src/Copy.php";
-    require_once "src/Patron.php";
-    
+    /**
+    * @backupGlobals disabled
+    * $backupStaticAttribute disabled
+    */
+
+    require_once __DIR__."/../src/Copy.php";
+    require_once __DIR__."/../src/Patron.php";
+
     class Patron
     {
         private $first_last;
