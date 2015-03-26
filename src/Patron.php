@@ -2,6 +2,9 @@
 
     $DB = new PDO('pgsql:host=localhost;dbname=library_test');
 
+    require_once "src/Copy.php";
+    require_once "src/Patron.php";
+    
     class Patron
     {
         private $first_last;
@@ -100,19 +103,19 @@
 
         function addCopy($copy)
         {
-            $GLOBALS['DB']->exec("SELECT checkouts (copy_id, patron_id) VALUES ({$copy->getId()}, {$this->getId()});");
+            $GLOBALS['DB']->exec("INSERT INTO checkouts (copy_id, patron_id) VALUES ({$copy->getId()}, {$this->getId()});");
         }
 
         function getCopies()
         {
-            $query = $GLOBALS['DB']->query("SELECT copies.* FROM patrons JOIN checkouts ON (patrons.id = checkouts.patron_id) JOIN copies ON (checkouts.copy_id = copy.id) WHERE patrons.id = {$this->getId()};");
+            $query = $GLOBALS['DB']->query("SELECT copies.* FROM patrons JOIN checkouts ON (patrons.id = checkouts.patron_id) JOIN copies ON (checkouts.copy_id = copies.id) WHERE patrons.id = {$this->getId()};");
             $returned_copies = $query->fetchAll(PDO::FETCH_ASSOC);
 
             $copies = array();
             foreach($returned_copies as $returned_copy) {
                 $book_id = $returned_copy['book_id'];
                 $id = $returned_copy['id'];
-                $new_copy = new Copy($book_id, $id);
+                $new_copies = new Copy($book_id, $id);
                 array_push($copies, $new_copies);
             }
             return $copies;

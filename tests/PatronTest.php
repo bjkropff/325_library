@@ -8,12 +8,14 @@
     */
 
     require_once "src/Patron.php";
+    require_once "src/Copy.php";
 
     class PatronTest extends PHPUnit_Framework_TestCase
     {
         protected function tearDown()
         {
             Patron::deleteAll();
+            Copy::deleteAll();
         }
 
         function test_getFirstLast()
@@ -143,6 +145,25 @@
             $this->assertEquals($test_patron, $result);
         }
 
+        function test_delete()
+        {
+            $book_id = 2;
+            $id = 1;
+            $test_copy = new Copy($book_id, $id);
+            $test_copy->save();
+
+            $first_last = 'Otto';
+            $phone = '555-555-5543';
+            $id2 = 2;
+            $test_patron = new Patron($first_last, $phone, $id2);
+            $test_patron->save();
+
+            $test_patron->addCopy($test_copy);
+            $test_patron->delete();
+
+            $this->assertEquals([], $test_patron->getCopies());
+        }
+
         function test_addCopy()
         {
             $first_last = 'Jimmy Bob';
@@ -157,7 +178,7 @@
             $test_copy->save();
 
             $test_patron->addCopy($test_copy);
-            $result = $test_patron->getCopy();
+            $result = $test_patron->getCopies();
 
             $this->assertEquals($test_copy, $result[0]);
         }
