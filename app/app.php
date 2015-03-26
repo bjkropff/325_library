@@ -52,6 +52,14 @@
         return $app['twig']->render('books.twig', array('books' => Book::getAll(), 'authors' => Author::getAll()));
     });
 
+    $app->patch("/books/{id}", function($id) use ($app) {
+        $title = $_POST['title'];
+        $book = Book::find($id);
+        $book->update($title);
+
+        return $app['twig']->render('edit_book.twig', array('book' => $book));
+    });
+
     $app->post("/delete_all_books", function() use ($app) {
         Book::deleteAll();
         return $app['twig']->render('books.twig', array('books' => Book::getAll()));
