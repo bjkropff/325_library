@@ -142,5 +142,24 @@
 
             $this->assertEquals($test_patron, $result);
         }
+
+        function test_addCopy()
+        {
+            $first_last = 'Jimmy Bob';
+            $phone = '555-555-5544';
+            $id = 2;
+            $test_patron = new Patron($first_last, $phone, $id);
+            $test_patron->save();
+
+            $book_id = 1;
+            $id = 3;
+            $test_copy = new Copy($book_id, $id);
+            $test_copy->save();
+
+            $test_patron->addCopy($test_copy);
+            $result = $test_patron->getCopy();
+
+            $this->assertEquals($test_copy, $result[0]);
+        }
     }
 ?>
